@@ -246,5 +246,3 @@ This project provides practical experience with:
 - Docker Hub: [sivasankaran189/xo-game](https://hub.docker.com/r/sivasankaran189/xo-game)
 
 ---
-
-⭐ If you find this project useful, consider giving the repository a star!
