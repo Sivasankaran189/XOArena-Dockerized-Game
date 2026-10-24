@@ -1,126 +1,250 @@
-XO Arena 🎮
-A lightweight, browser-based XO (Tic-Tac-Toe) game for two players, packaged as a Docker image and served using an unprivileged Nginx container.
-Docker Hub: https://hub.docker.com/r/sivasankaran189/xo-game
-✨ Features
-Two-player gameplay: Player X vs Player O
-Detects horizontal, vertical, and diagonal wins
-Detects draws
-Highlights the winning combination
-Scoreboard for both players
-Restart a round without resetting scores
-Reset scores and start a fresh game
-Responsive interface for desktop and mobile
-Lightweight Nginx-based Docker image
-Container health check
-Non-root container process
-Docker Compose configuration with log rotation
-🧰 Tech Stack
-HTML
-CSS
-JavaScript
-Nginx
-Docker
-Docker Compose
-The game is a static web application. It does not require a Node.js runtime, backend API, or database to run.
-🚀 Run from Docker Hub
-Make sure Docker Desktop or Docker Engine is running.
-1. Pull the image
-```powershell
+# 🎮 XO Arena | Dockerized Tic-Tac-Toe Game
+
+A lightweight, browser-based Tic-Tac-Toe game built with HTML, CSS, and JavaScript, containerized using Docker and served through Nginx. The project demonstrates Docker image creation, container deployment, health checks, and publishing images to Docker Hub.
+
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-Available-blue?logo=docker)](https://hub.docker.com/r/sivasankaran189/xo-game)
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-Web%20Server-009639?logo=nginx&logoColor=white)
+![License](https://img.shields.io/badge/License-Not%20Specified-lightgrey)
+
+## ✨ Features
+
+- 🎯 Two-player gameplay with X and O.
+- 🏆 Automatic win detection for rows, columns, and diagonals.
+- 🤝 Draw detection when the board is full.
+- 📊 Scoreboard to track both players' wins.
+- 🔄 Restart a round without resetting the scores.
+- ♻️ Reset scores and start a fresh game.
+- 📱 Responsive interface for desktop and mobile devices.
+- 🐳 Dockerized deployment using a lightweight Nginx image.
+- ❤️ Container health checks to monitor web server availability.
+- 🔐 Non-root container execution for improved security.
+- 📝 Docker Compose configuration with log rotation.
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| HTML5 | Game structure |
+| CSS3 | Styling and responsive layout |
+| JavaScript | Game logic and score tracking |
+| Nginx | Static web server |
+| Docker | Application containerization |
+| Docker Compose | Container configuration and lifecycle management |
+| Docker Hub | Container image distribution |
+
+## 🏗️ Architecture
+
+```text
+             User's Browser
+                   |
+                   | HTTP :8080
+                   v
+           Docker Container
+                   |
+                   v
+             Nginx Server
+                   |
+                   v
+          Static Game Files
+          /       |       \
+     index.html  style.css  app.js
+```
+
+The game runs entirely in the browser. Nginx serves the static files from inside the Docker container, so no backend API or database is required.
+
+## 🚀 Run the Game from Docker Hub
+
+You can run the published image without cloning the repository or building it locally.
+
+### 1. Pull the Docker image
+
+```bash
 docker pull sivasankaran189/xo-game:latest
 ```
-2. Start a container
-```powershell
-docker run -d --name xo-game -p 8080:8080 --restart unless-stopped sivasankaran189/xo-game:latest
+
+### 2. Start the container
+
+```bash
+docker run -d \
+  --name xo-game \
+  -p 8080:8080 \
+  --restart unless-stopped \
+  sivasankaran189/xo-game:latest
 ```
-3. Open the game
-Visit:
-http://localhost:8080
-4. Check the container
-```powershell
+
+### 3. Open the application
+
+Visit **http://localhost:8080** in your browser and start playing.
+
+### 4. Verify the container
+
+```bash
 docker ps
-docker inspect --format='{{.State.Health.Status}}' xo-game
 docker logs xo-game
+docker inspect --format='{{.State.Health.Status}}' xo-game
 ```
-The health status may take a few seconds to change to `healthy`.
-5. Stop and remove the container
-```powershell
+
+The health status may take a few seconds to become `healthy`.
+
+### 5. Stop the application
+
+```bash
 docker stop xo-game
 docker rm xo-game
 ```
-🏗️ Run with Docker Compose
-Clone or download this repository, then open PowerShell in the project directory.
-Build and start:
-```powershell
+
+## 💻 Run Locally with Docker Compose
+
+### Prerequisites
+
+- Docker Desktop or Docker Engine
+- Git, if cloning the repository
+
+### Clone the repository
+
+```bash
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+cd <YOUR_PROJECT_FOLDER>
+```
+
+Replace the placeholders with your actual GitHub repository URL and folder name.
+
+### Build and start the application
+
+```bash
 docker compose up --build -d
 ```
-Check status and logs:
-```powershell
+
+Open http://localhost:8080.
+
+Check the service status:
+
+```bash
 docker compose ps
+```
+
+View application logs:
+
+```bash
 docker compose logs -f
 ```
+
 Stop the application:
-```powershell
+
+```bash
 docker compose down
 ```
-🛠️ Build the Image Locally
-From the directory containing the `Dockerfile`:
-```powershell
+
+## 🐳 Build the Docker Image Manually
+
+Build the image from the project directory:
+
+```bash
 docker build -t xo-game:1.0 .
-docker run -d --name xo-game-local -p 8080:8080 xo-game:1.0
 ```
-Open http://localhost:8080.
-To clean up:
-```powershell
-docker stop xo-game-local
-docker rm xo-game-local
+
+Run the image:
+
+```bash
+docker run -d \
+  --name xo-game-local \
+  -p 8080:8080 \
+  xo-game:1.0
 ```
-If port `8080` is already in use, publish a different host port, for example `-p 8081:8080`, and visit http://localhost:8081.
-📦 Publish an Updated Image to Docker Hub
-Authenticate first:
-```powershell
+
+Access the game at http://localhost:8080.
+
+If port `8080` is already in use, use `-p 8081:8080` and visit http://localhost:8081.
+
+## 📦 Publish to Docker Hub
+
+To publish an updated version of the application:
+
+### 1. Authenticate with Docker Hub
+
+```bash
 docker login
 ```
-Build, tag, and push the image:
-```powershell
-docker build -t sivasankaran189/xo-game:1.0 .
-docker push sivasankaran189/xo-game:1.0
 
+### 2. Build the tagged image
+
+```bash
+docker build -t sivasankaran189/xo-game:1.0 .
+```
+
+### 3. Push the versioned image
+
+```bash
+docker push sivasankaran189/xo-game:1.0
+```
+
+### 4. Tag and publish the latest version
+
+```bash
 docker tag sivasankaran189/xo-game:1.0 sivasankaran189/xo-game:latest
 docker push sivasankaran189/xo-game:latest
 ```
-Never commit Docker Hub passwords or access tokens to source control.
-🐳 Docker Implementation
-Image: `sivasankaran189/xo-game`
-Container port: `8080`
-Default host port: `8080`
-Web server: Nginx unprivileged image
-Health check: HTTP request to the local web server
-Security: Runs as a non-root user and uses a read-only filesystem in the Compose configuration
-Logging: Docker Compose configures log rotation
-The frontend files are copied into the Nginx image, so users only need Docker to run the published container.
-📁 Project Structure
+
+**Docker Hub repository:** https://hub.docker.com/r/sivasankaran189/xo-game
+
+## 📁 Project Structure
+
 ```text
-xo-game/
+XO-Arena/
 ├── index.html       # Game interface
-├── style.css        # Styling and responsive layout
+├── style.css        # Styling and responsive design
 ├── app.js           # Game logic and score tracking
-├── Dockerfile       # Builds the container image
-├── nginx.conf       # Nginx web server configuration
-├── compose.yaml     # Local Docker Compose setup
-├── .dockerignore    # Excludes unnecessary build context files
+├── Dockerfile       # Docker image definition
+├── nginx.conf       # Nginx server configuration
+├── compose.yaml     # Docker Compose configuration
+├── .dockerignore    # Files excluded from the build context
 └── README.md        # Project documentation
 ```
-🎯 How to Play
-Player X takes the first turn.
-Players alternate placing X and O in empty cells.
-The first player to align three matching symbols horizontally, vertically, or diagonally wins.
-If all nine cells are filled and nobody has won, the round is a draw.
-Select Restart round to play again or Reset scores to clear the scoreboard.
-⚠️ Notes
-Scores are stored in browser memory. Refreshing the page resets the scoreboard.
-This is a local, two-player game on the same browser. It does not provide online multiplayer.
-The game does not store personal information or use a database.
-📄 License
-Choose and add a license file before redistributing the project. If no license is included, assume that standard copyright applies.
+
+## 🎮 How to Play
+
+1. Player X starts the game.
+2. Players take turns selecting empty cells.
+3. The first player to align three matching symbols horizontally, vertically, or diagonally wins.
+4. If all nine cells are occupied without a winner, the round ends in a draw.
+5. Select **Restart round** to play again.
+6. Select **Reset scores** to clear both players' scores.
+
+## 🔒 Docker Best Practices Implemented
+
+- **Lightweight runtime:** Uses an Alpine-based Nginx image.
+- **Non-root execution:** Runs the web server as an unprivileged user.
+- **Health checks:** Checks whether Nginx is serving HTTP requests.
+- **Read-only filesystem:** Enabled in the Docker Compose configuration, with temporary writable directories provided where required.
+- **Log rotation:** Limits Docker container log growth.
+- **Build context optimization:** Uses `.dockerignore` to exclude unnecessary files.
+- **Port exposure:** Publishes the web server port for browser access.
+
+## ⚠️ Limitations
+
+- Scores are maintained in browser memory and reset when the page is refreshed.
+- The game supports two players sharing the same browser, not online multiplayer.
+- No backend, database, or user authentication is included.
+
+## 🎯 Learning Outcomes
+
+This project provides practical experience with:
+
+- Writing and building Dockerfiles.
+- Running and managing containers.
+- Serving static web applications with Nginx.
+- Configuring Docker port mapping.
+- Using Docker Compose.
+- Implementing health checks and container logging.
+- Publishing and pulling Docker images through Docker Hub.
+
+## 👨‍💻 Author
+
+**Sivasankaran**
+
+- Docker Hub: [sivasankaran189/xo-game](https://hub.docker.com/r/sivasankaran189/xo-game)
+
 ---
-Built as a hands-on project to practise Docker image creation, container execution, health checks, Nginx configuration, and Docker Hub publishing.
+
+⭐ If you find this project useful, consider giving the repository a star!
