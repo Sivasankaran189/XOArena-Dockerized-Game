@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XO Arena</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <p class="eyebrow">TWO PLAYERS · ONE BOARD</p>
+      <h1>XO <span>Arena</span></h1>
+      <p class="subtitle">A little friendly competition.</p>
+    </header>
+
+    <section class="scoreboard" aria-label="Scoreboard">
+      <div class="score active" id="score-x"><span class="mark">X</span><span class="player">Player X</span><strong id="wins-x">0</strong></div>
+      <div class="score" id="score-o"><span class="mark">O</span><span class="player">Player O</span><strong id="wins-o">0</strong></div>
+    </section>
+
+    <section class="game-panel">
+      <p id="status" class="status" aria-live="polite">Player X's turn</p>
+      <div class="board" id="board" role="grid" aria-label="Tic tac toe board">
+        <button class="cell" data-index="0" aria-label="Cell 1" role="gridcell"></button>
+        <button class="cell" data-index="1" aria-label="Cell 2" role="gridcell"></button>
+        <button class="cell" data-index="2" aria-label="Cell 3" role="gridcell"></button>
+        <button class="cell" data-index="3" aria-label="Cell 4" role="gridcell"></button>
+        <button class="cell" data-index="4" aria-label="Cell 5" role="gridcell"></button>
+        <button class="cell" data-index="5" aria-label="Cell 6" role="gridcell"></button>
+        <button class="cell" data-index="6" aria-label="Cell 7" role="gridcell"></button>
+        <button class="cell" data-index="7" aria-label="Cell 8" role="gridcell"></button>
+        <button class="cell" data-index="8" aria-label="Cell 9" role="gridcell"></button>
+      </div>
+      <div class="actions">
+        <button id="restart" class="primary">Restart round</button>
+        <button id="reset" class="secondary">Reset scores</button>
+      </div>
+    </section>
+    <footer>Built for fun. Packaged with Docker.</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
